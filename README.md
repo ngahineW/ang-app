@@ -1,59 +1,152 @@
 # NetworkApp
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.2.
+An Angular mobile app built with Capacitor for Web, Android, and iOS.
 
-## Development server
+## Prerequisites
 
-To start a local development server, run:
+- Node.js 18+
+- npm
+- Angular CLI: `npm install -g @angular/cli`
+- For Android: [Android Studio](https://developer.android.com/studio)
+- For iOS: Xcode (macOS only)
+
+## Installation
+
+```bash
+npm install
+```
+
+## Development Server
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Open http://localhost:4200 in your browser.
 
-## Code scaffolding
+---
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
+## Build for Web
 
 ```bash
 ng build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Output: `dist/network-app/browser/`
 
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
+To preview the production build:
 ```bash
-ng test
+npx serve dist/network-app/browser
 ```
 
-## Running end-to-end tests
+---
 
-For end-to-end (e2e) testing, run:
+## Build for Android
 
+### First-time setup
 ```bash
-ng e2e
+# Install Capacitor CLI (if not installed)
+npm install @capacitor/cli @capacitor/core @capacitor/android
+
+# Add Android platform (already done)
+npx cap add android
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+### Build & Run
+```bash
+# Build web + sync to Android
+npm run cap:android
+```
 
-## Additional Resources
+This opens Android Studio. Then:
+1. Wait for Gradle sync to complete
+2. Click ▶️ Run or `Shift+F10`
+3. Select emulator or connected device
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+### Build APK
+In Android Studio:
+1. Build → Build Bundle(s) / APK(s) → Build APK(s)
+2. APK location: `android/app/build/outputs/apk/debug/app-debug.apk`
+
+### Build Release APK
+```bash
+cd android
+./gradlew assembleRelease
+```
+Output: `android/app/build/outputs/apk/release/app-release-unsigned.apk`
+
+---
+
+## Build for iOS (macOS only)
+
+### First-time setup
+```bash
+# Install Capacitor iOS (if not installed)
+npm install @capacitor/ios
+
+# Add iOS platform (already done)
+npx cap add ios
+
+# Install CocoaPods dependencies
+cd ios/App && pod install && cd ../..
+```
+
+### Build & Run
+```bash
+# Build web + sync to iOS
+npm run cap:ios
+```
+
+This opens Xcode. Then:
+1. Select your target device/simulator
+2. Click ▶️ Run or `Cmd+R`
+
+### Build for App Store
+In Xcode:
+1. Product → Archive
+2. Distribute App → App Store Connect
+
+---
+
+## Useful Commands
+
+| Command | Description |
+|---------|-------------|
+| `ng serve` | Start dev server |
+| `ng build` | Build for production |
+| `npm run cap:sync` | Build web + sync to native |
+| `npm run cap:android` | Build + open Android Studio |
+| `npm run cap:ios` | Build + open Xcode |
+| `npx cap sync` | Sync web build to native projects |
+| `npx cap copy` | Copy web assets only (faster) |
+
+---
+
+## Project Structure
+
+```
+├── src/                  # Angular source code
+├── dist/                 # Web build output
+├── android/              # Android native project
+├── ios/                  # iOS native project
+├── capacitor.config.ts   # Capacitor configuration
+└── angular.json          # Angular configuration
+```
+
+## Troubleshooting
+
+### Android: Gradle sync failed
+```bash
+cd android && ./gradlew clean && cd ..
+npx cap sync android
+```
+
+### iOS: Pod install failed
+```bash
+cd ios/App && pod install --repo-update && cd ../..
+```
+
+### Changes not showing on device
+```bash
+npm run cap:sync
+```

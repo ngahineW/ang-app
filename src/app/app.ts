@@ -8,7 +8,7 @@ import { StatusBar, Style } from '@capacitor/status-bar';
   selector: 'app-root',
   imports: [IonApp, IonRouterOutlet],
   templateUrl: './app.html',
-  styleUrl: './app.scss'
+  styleUrl: './app.css'
 })
 export class App implements OnInit {
   async ngOnInit() {

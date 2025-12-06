@@ -5,7 +5,7 @@ import { IonHeader, IonToolbar, IonTitle, IonContent, IonButton } from '@ionic/a
   selector: 'app-home',
   imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonButton],
   templateUrl: './home.html',
-  styleUrl: './home.scss',
+  styleUrl: './home.css',
 })
 export class Home {
 

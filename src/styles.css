@@ -13,4 +13,4 @@
 @import "@ionic/angular/css/flex-utils.css";
 
 /* Theme Variables */
-@import "./theme/variables.scss";
+@import "./theme/variables.css";
